@@ -24,7 +24,7 @@ function App() {
 
   //useEffects(O que fazer, quando Fazer) []=> Hora do carregamento da página
   useEffect(() => {
-    setNome("Bianca Moraes")
+    setNome("Ana, Bianca, Emily e Maria Júlia")
     //Buscar os dados do BackENd
     fetch("https://one022a-marketplace-ywnd.onrender.com/produtos")
       .then(resposta => resposta.json())
@@ -62,8 +62,8 @@ function App() {
                     <div key={usuario.id} className="usuario-item">
                         <h3>{usuario.nome}</h3>
                         <p>{usuario.email}</p>
-                        <p>Criado em: {new Date(usuario.created_at).toLocaleString()}</p>
-                        <p>Atualizado em: {new Date(usuario.updated_at).toLocaleString()}</p>
+                        <p>{usuario.created_at}</p>
+                        <p>{usuario.updated_at}</p>
                         </div>
                 ))}
             </div>
