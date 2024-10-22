@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import './App.css'
+
 type ProdutoType = {
     id:number,
     nome:string,
@@ -7,17 +8,31 @@ type ProdutoType = {
     descricao:string,
     imagem:string
 }
+
+type UsuarioType = {
+  id: number,
+  nome: string,
+  email: string,
+  created_at: string,
+  updated_at: string
+}
+
 function App() {
   const [nome, setNome] = useState("")
   const [produtos, setProdutos] = useState<ProdutoType []>([])
+  const [usuarios, setUsuarios] = useState<UsuarioType[]>([]);
+
   //useEffects(O que fazer, quando Fazer) []=> Hora do carregamento da página
   useEffect(() => {
-    setNome("Guilherme Terenciani")
+    setNome("Bianca Moraes")
     //Buscar os dados do BackENd
-    fetch("https://one022a-marketplace-e90o.onrender.com/produtos")
+    fetch("https://one022a-marketplace-ywnd.onrender.com/produtos")
       .then(resposta => resposta.json())
       .then(dados => setProdutos(dados))
     //Colocar em uma variável
+    fetch("https://one022a-marketplace-ywnd.onrender.com/usuarios")
+            .then(resposta => resposta.json())
+            .then(dados => setUsuarios(dados));
   }, [])
 
   return (
@@ -29,7 +44,9 @@ function App() {
             return (
               <div key={produto.id} className="produto-item">
                 <h1>{produto.nome}</h1>
+                <div className = "container-imagem">
                 <img src={produto.imagem} alt="Imagem do celular" />
+                </div>
                 <p>{produto.preco}</p>
                 <p>{produto.descricao}</p>
               </div>
@@ -38,8 +55,19 @@ function App() {
         }
 
       </div>
-    </>
-  )
-}
 
+      <div className="usuarios-container">
+                <h2>Lista de Usuários</h2>
+                {usuarios.map(usuario => (
+                    <div key={usuario.id} className="usuario-item">
+                        <h3>{usuario.nome}</h3>
+                        <p>{usuario.email}</p>
+                        <p>Criado em: {new Date(usuario.created_at).toLocaleString()}</p>
+                        <p>Atualizado em: {new Date(usuario.updated_at).toLocaleString()}</p>
+                        </div>
+                ))}
+            </div>
+        </>
+    );
+}
 export default App
